@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jelly Truck Adventure | Play Online Physics Driving Game</title>
+
+  <!-- SEO Meta -->
+  <meta name="description" content="Play Jelly Truck, the ultimate browser-based physics driving game with deformable jelly vehicles. No downloads required—start your wobbly adventure now!" />
+  <meta name="keywords" content="Jelly Truck,Jelly Truck Unblocked, physics driving game, WebGL game, browser game, free online game, jelly physics, driving challenge" />
+  <meta name="author" content="Jelly Truck Team" />
+  <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Jelly Truck - Play Online" />
+  <meta property="og:description" content="Experience Jelly Truck , a browser game featuring unique jelly physics and challenging driving levels." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jellytruck2.github.io/" />
+  <meta property="og:image" content="https://jellytruck2.github.io/" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jelly Truck Adventure - Play Online" />
+  <meta name="twitter:description" content="Experience Jelly Truck Adventure, a browser game featuring unique jelly physics and challenging driving levels." />
+  <meta name="twitter:image" content="https://yourwebsite.com/images/thumbnail.jpg" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+  <style>
+    /* Reset and Global Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #000;
+      color: #fff;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #ccc;
+    }
+
+    header {
+      background: #000;
+      padding: 15px 40px;
+      border-bottom: 3px solid #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+    }
+
+    .logo {
+      font-size: 2.2em;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .logo:hover {
+      color: #ccc;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin-left: 30px;
+    }
+
+    nav ul li a {
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .hero h1 {
+      font-size: 3.5em;
+      font-weight: 700;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+      font-size: 1.3em;
+      font-weight: 300;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Game Container Responsive */
+    .container {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .iframe-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      overflow: hidden;
+    }
+
+    .iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .container:hover iframe {
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    button.btn {
+      background-color: #fff;
+      color: #000;
+      border: none;
+      padding: 12px 28px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    button.btn:hover {
+      background-color: #ccc;
+    }
+
+    section {
+      background: #111;
+      border: 2px solid #333;
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 50px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+    }
+
+    section h2 {
+      text-align: center;
+      font-size: 2.2em;
+      font-weight: 700;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+      border-bottom: 2px solid #fff;
+      padding-bottom: 10px;
+    }
+
+    section h3 {
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #ccc;
+    }
+
+    section p, section ul {
+      font-size: 1.1em;
+      font-weight: 400;
+      margin-bottom: 15px;
+    }
+
+    section ul {
+      padding-left: 25px;
+    }
+
+    section li {
+      margin-bottom: 10px;
+    }
+
+    /* Accordion Styles */
+    .accordion {
+      background-color: #222;
+      color: #eee;
+      cursor: pointer;
+      padding: 15px 20px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 1.2em;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      margin-bottom: 8px;
+      border-radius: 8px;
+    }
+
+    .accordion:hover, .accordion.active {
+      background-color: #444;
+    }
+
+    .panel {
+      background-color: #111;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      padding: 0 20px;
+      border-radius: 0 0 8px 8px;
+      margin-bottom: 20px;
+      font-weight: 400;
+      font-size: 1em;
+    }
+
+    /* Footer */
+    footer {
+      background: #000;
+      border-top: 3px solid #fff;
+      padding: 25px 20px;
+      text-align: center;
+      box-shadow: 0 -2px 10px rgba(255, 255, 255, 0.05);
+      font-weight: 300;
+      font-size: 0.95em;
+    }
+
+    footer ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    footer ul li a {
+      font-weight: 600;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer ul li a:hover {
+      color: #ccc;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav ul li {
+        margin-left: 0;
+        margin-bottom: 10px;
+      }
+
+      .hero h1 {
+        font-size: 2.6em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="#" class="logo" title="Jelly Truck">Jelly Truck</a>
+    <nav>
+      <ul>
+        <li><a href="#about" title="About Jelly Truck">About</a></li>
+        <li><a href="#gameplay" title="Gameplay Details">Gameplay</a></li>
+        <li><a href="#faq" title="Frequently Asked Questions">FAQ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Introduction to Jelly Truck Adventure">
+      <h1>Jelly Truck</h1>
+      <p>Welcome to Jelly Truck, the browser-based physics driving game where wobbly jelly vehicles tackle challenging terrains! Dive into this unique driving experience—no downloads, just pure WebGL-powered fun. Play now and feel the jelly bounce!</p>
+    </section>
+   <section id="gameplay" aria-labelledby="gameplay-title">
+      <h2 id="gameplay-title">jelly truck unblocked</h2>
+     <div class="container" aria-label="Jelly Truck game iframe container">
+        <div class="iframe-container">
+        <iframe src="https://webglmath.github.io/jelly-truck/" id="gameframe" frameborder="0" style="width: 100%;min-height:700px"></iframe> <div class="cs-hero_btns" style="margin-top: 20px;justify-content:center" class="cs-hero_btn cs-style1 cs-color3" onclick="open_fullscreen()" style="cursor: pointer;"><span>Full Screen</span></a> </div> </div>
+        </div>
+        <div class="btn-container">
+          <button class="btn" onclick="open_fullscreen()" aria-label="Play Jelly Truck in fullscreen mode">Play Fullscreen</button>
+        </div>
+      </div>
+   <p id="game-instructions" style="font-size: 0.9em; color: #bbb; margin-top: 15px;">Tip: Use the arrow keys to drive your jelly truck. Click “Play Fullscreen” for the best experience.</p>
+
+      <p>Drive your jelly truck across ramps and uneven terrain while managing speed and balance to avoid flipping over. The soft jelly body reacts realistically to collisions and changes in momentum, creating an engaging and fun driving challenge.</p>
+      <h3>How to Play</h3>
+      <ul>
+        <li><strong>Arrow Keys:</strong> Use left and right arrows to steer your jelly truck</li>
+        <li><strong>Up Arrow:</strong> Accelerate forward</li>
+        <li><strong>Down Arrow:</strong> Brake or reverse</li>
+        <li><strong>Spacebar:</strong> Use special boost (if available in certain levels)</li>
+        <li>Try to complete each level as fast as possible without tipping over</li>
+      </ul>
+
+ 
+     
+    </section>
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About Jelly Truck</h2>
+      <p>Jelly Truck is a one-of-a-kind driving game featuring deformable jelly-like vehicles that stretch, bounce, and wobble through exciting levels. Built with cutting-edge WebGL technology, it runs directly in your browser without any downloads or installations.</p>
+      <h3>Key Features</h3>
+      <ul>
+        <li>Realistic jelly physics with smooth vehicle deformation</li>
+        <li>Multiple challenging levels filled with ramps, bumps, and obstacles</li>
+        <li>Optimized for fast performance on desktop and mobile browsers</li>
+        <li>No downloads or installations—play instantly online</li>
+        <li>Fun and intuitive controls for players of all ages</li>
+      </ul>
+    </section>
+
+ 
+
+    <section id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Frequently Asked Questions</h2>
+
+      <button class="accordion" aria-expanded="false" aria-controls="faq1" id="faq1-header">What is Jelly Truck Adventure?</button>
+      <div class="panel" id="faq1" role="region" aria-labelledby="faq1-header">
+        <p>Jelly Truck Adventure is a physics-based driving game played directly in your browser. You control a jelly-like truck that deforms and bounces as you navigate challenging levels. No installation is required.</p>
+      </div>
+
+      <button class="accordion" aria-expanded="false" aria-controls="faq2" id="faq2-header">Can I play Jelly Truck on mobile devices?</button>
+      <div class="panel" id="faq2" role="region" aria-labelledby="faq2-header">
+        <p>Yes! Jelly Truck is optimized for both desktop and mobile browsers. Controls adapt to your device, making it easy and fun to play on smartphones and tablets.</p>
+      </div>
+
+      <button class="accordion" aria-expanded="false" aria-controls="faq3" id="faq3-header">Do I need to download or install anything?</button>
+      <div class="panel" id="faq3" role="region" aria-labelledby="faq3-header">
+        <p>No downloads or installations are necessary. Jelly Truck runs entirely in your web browser using WebGL technology.</p>
+      </div>
+
+      <button class="accordion" aria-expanded="false" aria-controls="faq4" id="faq4-header">Who developed Jelly Truck Adventure?</button>
+      <div class="panel" id="faq4" role="region" aria-labelledby="faq4-header">
+        <p>Jelly Truck Adventure was developed by the Jelly Truck Team, dedicated to bringing fun and innovative browser gaming experiences.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <ul>
+      <li><a href="#about" title="About Jelly Truck">About</a></li>
+      <li><a href="#gameplay" title="Gameplay Details">Gameplay</a></li>
+      <li><a href="#faq" title="Frequently Asked Questions">FAQ</a></li>
+    </ul>
+    <p>&copy; 2025 Jelly Truck Team. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Accordion toggle functionality with ARIA attributes for accessibility
+    const accordions = document.querySelectorAll(".accordion");
+
+    accordions.forEach((acc) => {
+      acc.addEventListener("click", function () {
+        const expanded = this.getAttribute("aria-expanded") === "true";
+        // Close all other accordions
+        accordions.forEach((a) => {
+          a.setAttribute("aria-expanded", "false");
+          document.getElementById(a.getAttribute("aria-controls")).style.maxHeight = null;
+          a.classList.remove("active");
+        });
+
+        if (!expanded) {
+          this.setAttribute("aria-expanded", "true");
+          const panel = document.getElementById(this.getAttribute("aria-controls"));
+          panel.style.maxHeight = panel.scrollHeight + "px";
+          this.classList.add("active");
+        }
+      });
+    });
+
+    // Fullscreen function
+    function open_fullscreen() {
+      const gameframe = document.getElementById("gameframe");
+      if (gameframe.requestFullscreen) {
+        gameframe.requestFullscreen();
+      } else if (gameframe.webkitRequestFullscreen) { /* Safari */
+        gameframe.webkitRequestFullscreen();
+      } else if (gameframe.msRequestFullscreen) { /* IE11 */
+        gameframe.msRequestFullscreen();
+      } else {
+        alert("Fullscreen mode is not supported by your browser.");
+      }
+    }
+  </script>
+
+  <!-- JSON-LD structured data for SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Jelly Truck Adventure",
+      "url": "https://jellytruck2.github.io/",
+      "description": "Play Jelly Truck, a physics-based driving game with deformable jelly-like vehicles. Browser-based, no downloads required.",
+      "author": {
+        "@type": "Organization",
+        "name": "Jelly Truck Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Jelly Truck Team",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://jellytruck2.github.io/"
+        }
+      },
+      "image": "https://jellytruck2.github.io/",
+      "operatingSystem": "Browser",
+      "applicationCategory": "GameApplication"
+    }
+  </script>
+</body>
+</html>
